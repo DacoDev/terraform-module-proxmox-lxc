@@ -22,8 +22,8 @@ variable "container_template_file" {
 }
 variable "container_template_file_insecure" {
   description = "Value is auto-set based on value of the container_template_file; if it starts with https, insecure=false, if http, insecure=true."
-  type = bool
-  default = regex("^https(.*)", var.container_template_file) ? "false" : "true"
+  type        = bool
+  default     = regex("^https(.*)", var.container_template_file) ? "false" : "true"
 }
 variable "datastore_id" {
   description = "The drive where the container's root storage will be created. The size of the root volume is current limited to the size of the base image due to a current limitation in the provider this is using."
@@ -76,6 +76,6 @@ variable "cpu_units" {
 }
 variable "password_length" {
   description = "Length of the randomly generated password."
-  type = number
-  default = 16
+  type        = number
+  default     = 16
 }
