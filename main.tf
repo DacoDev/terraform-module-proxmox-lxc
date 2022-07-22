@@ -45,11 +45,11 @@ resource "proxmox_virtual_environment_file" "container_template" {
   node_name    = var.node_name
   source_file {
     path = var.container_template_file
-    # insecure = true
+    insecure = var.container_template_file_insecure
   }
 }
 resource "random_password" "lxc_password" {
-  length           = 16
+  length           = var.password_length
   override_special = "_%@"
   special          = true
 }
