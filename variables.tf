@@ -19,7 +19,7 @@ variable "container_template_file" {
   description = "A .tar.zst/.tar.gz/.tar.xz as found at https://us.lxd.images.canonical.com/images/ or http://download.proxmox.com/images/system/"
   type        = string
   validation {
-    condition = can(regex("(http|https):\\/\\/(.*)(.tar.gz|.tar.zst|.tar.xz)", var.container_name))
+    condition = can(regex("(http|https):\\/\\/(.*)(.tar.gz|.tar.zst|.tar.xz)", var.container_template_file))
     error_message = "URL should start with HTTP or HTTPS and end with one of .tar.gz, .tar.zst, or .tar.xz"
   }
 }
