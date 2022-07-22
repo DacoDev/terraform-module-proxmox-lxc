@@ -1,5 +1,5 @@
 variable "distro" {
-  description = "Selection of the QEMU agent that will be used with the container."
+  description = "Selection of the QEMU agent that will be used with the container. Options: alpine, archlinux, centos, debian, fedora, gentoo, opensuse, ubuntu, unmanaged"
   type        = string
   validation {
     condition = contains(["alpine", "archlinux", "centos", "debian", "fedora", "gentoo", "opensuse", "ubuntu", "unmanaged"], var.distro)
@@ -12,7 +12,7 @@ variable "node_name" {
     condition = can(regex("[A-Za-z0-9.-]{1,63}", var.node_name))
   }
 }
-variable "pve_container_template_file" {
+variable "container_template_file" {
   # todo: figure out local pathing for pre-downloaded 
   description = "A .tar.zst/.tar.gz/.tar.xz as found at https://us.lxd.images.canonical.com/images/ or http://download.proxmox.com/images/system/"
   type        = string

@@ -44,7 +44,7 @@ resource "proxmox_virtual_environment_file" "container_template" {
   datastore_id = "local"
   node_name    = var.node_name
   source_file {
-    path = var.pve_container_template_file
+    path = var.container_template_file
     # insecure = true
   }
 }
