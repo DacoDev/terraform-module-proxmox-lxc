@@ -23,10 +23,6 @@ variable "container_template_file" {
     error_message = "URL should start with HTTP or HTTPS and end with one of .tar.gz, .tar.zst, or .tar.xz."
   }
 }
-variable "container_template_file_insecure" {
-  description = "Value is auto-set based on value of the container_template_file; if it starts with https, insecure=false, if http, insecure=true."
-  type        = bool
-}
 variable "datastore_id" {
   description = "The drive where the container's root storage will be created. The size of the root volume is current limited to the size of the base image due to a current limitation in the provider this is using."
   type        = string
