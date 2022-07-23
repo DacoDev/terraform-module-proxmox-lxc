@@ -6,7 +6,7 @@ terraform {
   }
 }
 locals {
-  container_template_file_insecure = regex("^https(.*)", var.container_template_file) ? "false" : "true"
+  container_template_file_insecure = contains(["https"], var.container_template_file) ? false : true
 }
 resource "proxmox_virtual_environment_container" "proxmox_lxc" {
   description = "Managed by Terraform"
