@@ -65,7 +65,7 @@ variable "cpu_cores" {
   description = "Number of cores to make available to the container (based on the threaded core count)"
   type        = number
   validation {
-    condition     = can(regex("[0-9]{1,}"), var.cpu_cores)
+    condition     = can(regex("[0-9]{1,}", var.cpu_cores))
     error_message = "Must contain a number of 1 or more."
   }
 }
