@@ -53,7 +53,7 @@ variable "vm_id" {
   description = "The VM ID to assign, if count is greater than 1, the VM ID iterates by 1 for each host. ex: count=3,vm_id=100, would give you VM IDs 100, 101, 102"
   type        = number
   validation {
-    condition     = can(regex("[0-9]{1,9}", var.container_name))
+    condition     = can(regex("[0-9]{1,9}", var.vm_id))
     error_message = "Can contain a number between 0 and 999999999."
   }
 }
