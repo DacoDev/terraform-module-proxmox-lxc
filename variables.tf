@@ -3,7 +3,7 @@ variable "distro" {
   type        = string
   validation {
     condition     = contains(["alpine", "archlinux", "centos", "debian", "fedora", "gentoo", "opensuse", "ubuntu", "unmanaged"], var.distro)
-    error_message = "The distro var should contain one of alpine, archlinux, centos, debian, fedora, gentoo, opensuse, ubuntu, unmanaged"
+    error_message = "The distro var should contain one of alpine, archlinux, centos, debian, fedora, gentoo, opensuse, ubuntu, unmanaged."
   }
 }
 variable "node_name" {
@@ -11,7 +11,7 @@ variable "node_name" {
   type        = string
   validation {
     condition     = can(regex("[A-Za-z0-9.-]{1,63}", var.node_name))
-    error_message = "This var is constrained by the node name requirements set forth by ProxMox"
+    error_message = "This var is constrained by the node name requirements set forth by ProxMox."
   }
 }
 variable "container_template_file" {
@@ -20,7 +20,7 @@ variable "container_template_file" {
   type        = string
   validation {
     condition     = can(regex("(http|https):\\/\\/(.*)(.tar.gz|.tar.zst|.tar.xz)", var.container_template_file))
-    error_message = "URL should start with HTTP or HTTPS and end with one of .tar.gz, .tar.zst, or .tar.xz"
+    error_message = "URL should start with HTTP or HTTPS and end with one of .tar.gz, .tar.zst, or .tar.xz."
   }
 }
 variable "container_template_file_insecure" {
@@ -37,7 +37,7 @@ variable "ram_MiB" {
   type        = number
   validation {
     condition     = can(regex("[0-9]+", var.ram_MiB))
-    error_message = "Numbers only, no limit currently but maybe it won't work"
+    error_message = "Numbers only, no limit currently but maybe it won't work."
   }
 }
 variable "swap_MiB" {
@@ -46,7 +46,7 @@ variable "swap_MiB" {
   default     = 0
   validation {
     condition     = can(regex("[0-9]+", var.swap_MiB))
-    error_message = "Numbers only, no limit currently but maybe it won't work"
+    error_message = "Numbers only, no limit currently but maybe it won't work."
   }
 }
 variable "vm_id" {
@@ -54,7 +54,7 @@ variable "vm_id" {
   type        = number
   validation {
     condition     = can(regex("[0-9]{1,9}", var.container_name))
-    error_message = "Can contain a number between 0 and 999999999"
+    error_message = "Can contain a number between 0 and 999999999."
   }
 }
 variable "container_name" {
@@ -62,7 +62,7 @@ variable "container_name" {
   type        = string
   validation {
     condition     = can(regex("[A-Za-z0-9.-]{1,63}", var.container_name))
-    error_message = "Has to conform with RFC defined hostname characters and length, may fail if it's a prefix with enough chars to overflow the total of 63"
+    error_message = "Has to conform with RFC defined hostname characters and length, may fail if it's a prefix with enough chars to overflow the total of 63."
   }
 }
 variable "cpu_cores" {
@@ -70,7 +70,7 @@ variable "cpu_cores" {
   type        = number
   validation {
     condition     = can(regex("[0-9]{1,}"), var.cpu_cores)
-    error_message = "Must contain a number of 1 or more"
+    error_message = "Must contain a number of 1 or more."
   }
 }
 variable "cpu_units" {
@@ -79,7 +79,7 @@ variable "cpu_units" {
   default     = 1024
   validation {
     condition     = can(regex("[0-9]+", var.cpu_units))
-    error_message = "Numbers only, not sure what the limit is"
+    error_message = "Numbers only, not sure what the limit is."
   }
 }
 variable "password_length" {
