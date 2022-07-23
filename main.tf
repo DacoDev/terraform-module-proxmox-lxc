@@ -5,6 +5,11 @@ terraform {
     }
   }
 }
+
+locals {
+  container_template_file_insecure = regex("^https(.*)", var.container_template_file) ? "false" : "true"
+}
+
 resource "proxmox_virtual_environment_container" "proxmox_lxc" {
   description = "Managed by Terraform"
   node_name   = var.node_name
@@ -45,7 +50,7 @@ resource "proxmox_virtual_environment_file" "container_template" {
   node_name    = var.node_name
   source_file {
     path     = var.container_template_file
-    insecure = var.container_template_file_insecure
+    insecure = local.container_template_file_insecure
   }
 }
 resource "random_password" "lxc_password" {
