@@ -25,11 +25,11 @@ resource "proxmox_virtual_environment_container" "proxmox_lxc" {
   }
   cpu {
     architecture = "amd64"
-    cores        = var.cores
+    cores        = var.cpu_cores
   }
   memory {
-    dedicated = var.ram_MB
-    swap      = var.swap_MB
+    dedicated = var.ram_MiB
+    swap      = var.swap_MiB
   }
   disk {
     datastore_id = var.datastore_id
