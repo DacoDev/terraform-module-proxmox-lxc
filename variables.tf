@@ -28,6 +28,10 @@ variable "datastore_id" {
   type        = string
   default     = "local-lvm"
 }
+variable "root_disk_size" {
+  type        = string
+  default     = "4G"
+}
 variable "ram_MiB" {
   description = "Amount of RAM to provision for each container, in MebiBytes."
   type        = number
