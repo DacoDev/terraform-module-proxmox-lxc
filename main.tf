@@ -33,7 +33,7 @@ resource "proxmox_virtual_environment_container" "proxmox_lxc" {
   }
   disk {
     datastore_id = var.datastore_id
-    root_disk_size = var.root_disk_size
+    rootfs_size = var.rootfs_size
   }
   network_interface {
     name = "veth0"

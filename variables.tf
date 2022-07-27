@@ -28,7 +28,7 @@ variable "datastore_id" {
   type        = string
   default     = "local-lvm"
 }
-variable "root_disk_size" {
+variable "rootfs_size" {
   type        = string
   default     = "4G"
 }
