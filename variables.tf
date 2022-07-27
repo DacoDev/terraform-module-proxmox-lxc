@@ -31,6 +31,10 @@ variable "datastore_id" {
 variable "rootfs_size" {
   type    = string
   default = "4G"
+  validation {
+    condition = can(regex("\\d+(\\.\\d+)?[KMGT]", var.rootfs_size))
+    error_message = "rootfs_size must match format like 4G for 4 Gigabytes or 1.5T for 1.5 Terrabytes"
+  }
 }
 variable "ram_MiB" {
   description = "Amount of RAM to provision for each container, in MebiBytes."
