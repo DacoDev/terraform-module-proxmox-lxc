@@ -29,8 +29,8 @@ variable "datastore_id" {
   default     = "local-lvm"
 }
 variable "rootfs_size" {
-  type        = string
-  default     = "4G"
+  type    = string
+  default = "4G"
 }
 variable "ram_MiB" {
   description = "Amount of RAM to provision for each container, in MebiBytes."
