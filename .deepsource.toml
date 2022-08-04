@@ -1,0 +1,13 @@
+version = 1
+
+[[analyzers]]
+name = "shell"
+enabled = true
+
+[[analyzers]]
+name = "secrets"
+enabled = true
+
+[[analyzers]]
+name = "terraform"
+enabled = true
