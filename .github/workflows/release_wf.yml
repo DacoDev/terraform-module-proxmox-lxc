@@ -1,33 +1,19 @@
-name: release_wf
-
-# on:
-#   workflow_run:
-#     workflows: ["version_wf"]
-#     types: 
-#       - completed
-
 on:
   push:
     branches:
       - main
 
 jobs:
-  release:
+  create_release:
     name: Creating a Release
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-
-      - id: checkout
-        name: Checking out the code
-        uses: actions/checkout@v3
+      - name: Checkout the code
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
-      - id: semantic-release
-        name: install sematic release NPM
+ 
+      - name: Install Semantic Release NPM
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ls -la
-          pwd
-          npx semantic-release
+        run: npx semantic-release
