@@ -32,7 +32,7 @@ variable "disk_size" {
   type    = number
   default = 4
   validation {
-    condition = can(regex("[0-9]+", var.disk_size))
+    condition     = can(regex("[0-9]+", var.disk_size))
     error_message = "Set the size of the LXC disk in GB"
   }
 }
