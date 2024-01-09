@@ -2,6 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source = "bpg/proxmox"
+      version = "0.43.0"
     }
   }
 }
@@ -33,7 +34,7 @@ resource "proxmox_virtual_environment_container" "proxmox_lxc" {
   }
   disk {
     datastore_id = var.datastore_id
-    rootfs_size  = var.rootfs_size
+    size  = var.disk_size
   }
   network_interface {
     name = "veth0"

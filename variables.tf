@@ -28,12 +28,12 @@ variable "datastore_id" {
   type        = string
   default     = "local-lvm"
 }
-variable "rootfs_size" {
-  type    = string
-  default = "4G"
+variable "disk_size" {
+  type    = number
+  default = 4
   validation {
-    condition = can(regex("\\d+(\\.\\d+)?[KMGT]", var.rootfs_size))
-    error_message = "rootfs_size must match format like 4G for 4 Gigabytes or 1.5T for 1.5 Terrabytes"
+    condition = can(regex("[0-9]+", var.disk_size))
+    error_message = "Set the size of the LXC disk in GB"
   }
 }
 variable "ram_MiB" {
@@ -57,8 +57,8 @@ variable "vm_id" {
   description = "The VM ID to assign, if count is greater than 1, the VM ID iterates by 1 for each host. ex: count=3,vm_id=100, would give you VM IDs 100, 101, 102"
   type        = number
   validation {
-    condition     = can(regex("[0-9]{1,9}", var.vm_id))
-    error_message = "Can contain a number between 0 and 999999999."
+    condition     = can(regex("^([1-9][0-9]{1,8}|[1-2][0-9]{9}|214748364[0-7])$", var.vm_id))
+    error_message = "Can contain a number between 100 and 2147483647."
   }
 }
 variable "container_name" {
