@@ -29,8 +29,8 @@ resource "proxmox_virtual_environment_container" "proxmox_lxc" {
     cores        = var.cpu_cores
   }
   memory {
-    dedicated = var.ram_MiB
-    swap      = var.swap_MiB
+    dedicated = var.memory_dedicated
+    swap      = var.memory_swap
   }
   disk {
     datastore_id = var.datastore_id

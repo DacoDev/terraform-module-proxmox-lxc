@@ -36,20 +36,21 @@ variable "disk_size" {
     error_message = "Set the size of the LXC disk in GB"
   }
 }
-variable "ram_MiB" {
-  description = "Amount of RAM to provision for each container, in MebiBytes."
+variable "memory_dedicated" {
+  description = "Amount of RAM to provision for each container, in MegaBytes."
   type        = number
+  default = 512
   validation {
-    condition     = can(regex("[0-9]+", var.ram_MiB))
+    condition     = can(regex("[0-9]+", var.memory_dedicated))
     error_message = "Numbers only, no limit currently but maybe it won't work."
   }
 }
-variable "swap_MiB" {
+variable "memory_swap" {
   description = "By setting this value, you grant access for the container to use the host node SWAP space, 0 by default."
   type        = number
   default     = 0
   validation {
-    condition     = can(regex("[0-9]+", var.swap_MiB))
+    condition     = can(regex("[0-9]+", var.memory_swap))
     error_message = "Numbers only, no limit currently but maybe it won't work."
   }
 }
