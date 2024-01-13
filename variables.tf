@@ -15,12 +15,11 @@ variable "node_name" {
   }
 }
 variable "container_template_file" {
-  # todo: figure out local pathing for pre-downloaded 
-  description = "A .tar.zst/.tar.gz/.tar.xz as found at https://us.lxd.images.canonical.com/images/ or http://download.proxmox.com/images/system/"
+  description = "A .tar.zst/.tar.gz/.tar.xz as found at https://us.lxd.images.canonical.com/images/ or http://download.proxmox.com/images/system/. Container templates pre-downloaded to the Terraform-running machine can also be used."
   type        = string
   validation {
-    condition     = can(regex("(http|https):\\/\\/(.*)(.tar.gz|.tar.zst|.tar.xz)", var.container_template_file))
-    error_message = "URL should start with HTTP or HTTPS and end with one of .tar.gz, .tar.zst, or .tar.xz."
+    condition     = can(regex("(https?:\\/\\/(.*)\\.(tar\\.gz|tar\\.zst|tar\\.xz))|(([^\\0]+\\.((tar\\.gz)|(tar\\.zst)|(tar\\.xz))))", var.container_template_file))
+    error_message = "URL should start with HTTP or HTTPS and end with one of .tar.gz, .tar.zst, or .tar.xz. Local file paths should be absolute and start with a /."
   }
 }
 variable "datastore_id" {
