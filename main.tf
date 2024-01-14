@@ -7,8 +7,12 @@ terraform {
   }
 }
 locals {
-  container_template_file_insecure = contains(["https"], var.container_template_file) ? false : true
+  container_template_file_insecure = can(regex("^https:\\/\\/.*", var.container_template_file)) ? "false" : "true"
+  container_template_file_download = (can(regex("^https?:\\/\\/.*", var.container_template_file)) && var.migrate_template_file == true) ? 1 : 0
+  container_template_file_local    = (local.container_template_file_download == 0 || var.migrate_template_file == false) ? 1 : 0
+  container_template               = (local.container_template_file_download == 1 && var.migrate_template_file == true) ? proxmox_virtual_environment_download_file.container_template[0].id : proxmox_virtual_environment_file.container_template[0].id
 }
+
 resource "proxmox_virtual_environment_container" "proxmox_lxc" {
   description = "Managed by Terraform"
   node_name   = var.node_name
@@ -40,11 +44,12 @@ resource "proxmox_virtual_environment_container" "proxmox_lxc" {
     name = "veth0"
   }
   operating_system {
-    template_file_id = proxmox_virtual_environment_file.container_template.id
+    template_file_id = local.container_template
     type             = var.distro
   }
 }
 resource "proxmox_virtual_environment_file" "container_template" {
+  count        = local.container_template_file_local
   content_type = "vztmpl"
   datastore_id = "local"
   node_name    = var.node_name
@@ -53,6 +58,17 @@ resource "proxmox_virtual_environment_file" "container_template" {
     insecure = local.container_template_file_insecure
   }
 }
+
+resource "proxmox_virtual_environment_download_file" "container_template" {
+  count        = local.container_template_file_download
+  content_type = "vztmpl"
+  datastore_id = "local"
+  node_name    = var.node_name
+  url          = var.container_template_file
+  overwrite    = true
+  verify       = local.container_template_file_insecure == "true" ? "false" : "true"
+}
+
 resource "random_password" "lxc_password" {
   length           = var.password_length
   override_special = "_%@"

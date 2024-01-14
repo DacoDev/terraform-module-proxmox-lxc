@@ -38,7 +38,7 @@ variable "disk_size" {
 variable "memory_dedicated" {
   description = "Amount of RAM to provision for each container, in MegaBytes."
   type        = number
-  default = 512
+  default     = 512
   validation {
     condition     = can(regex("[0-9]+", var.memory_dedicated))
     error_message = "Numbers only, no limit currently but maybe it won't work."
@@ -90,4 +90,9 @@ variable "password_length" {
   description = "Length of the randomly generated password."
   type        = number
   default     = 16
+}
+variable "migrate_template_file" {
+  description = "Set to false to prevent re-creating the underlying proxmox_virtual_environment_file."
+  type        = bool
+  default     = true
 }
