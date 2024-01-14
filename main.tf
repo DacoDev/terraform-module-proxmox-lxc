@@ -4,13 +4,21 @@ terraform {
       source  = "bpg/proxmox"
       version = "0.43.2"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.6.0"
+    }
   }
 }
+
+resource "random_uuid" "name_suffix" {}
+
 locals {
-  container_template_file_insecure = can(regex("^https:\\/\\/.*", var.container_template_file)) ? "false" : "true"
-  container_template_file_download = (can(regex("^https?:\\/\\/.*", var.container_template_file)) && var.migrate_template_file == true) ? 1 : 0
-  container_template_file_local    = (local.container_template_file_download == 0 || var.migrate_template_file == false) ? 1 : 0
-  container_template               = (local.container_template_file_download == 1 && var.migrate_template_file == true) ? proxmox_virtual_environment_download_file.container_template[0].id : proxmox_virtual_environment_file.container_template[0].id
+  container_template_file_insecure      = can(regex("^https:\\/\\/.*", var.container_template_file)) ? "false" : "true"
+  container_template_file_download      = (can(regex("^https?:\\/\\/.*", var.container_template_file)) && var.migrate_template_file == true) ? 1 : 0
+  container_template_file_download_name = local.container_template_file_download == 1 ? format("%s-%s", random_uuid.name_suffix.result, join("", regex("^https?:\\/\\/.*\\/.*?\\/?(.*)", var.container_template_file))) : null
+  container_template_file_local         = (local.container_template_file_download == 0 || var.migrate_template_file == false) ? 1 : 0
+  container_template                    = (local.container_template_file_download == 1 && var.migrate_template_file == true) ? proxmox_virtual_environment_download_file.container_template[0].id : proxmox_virtual_environment_file.container_template[0].id
 }
 
 resource "proxmox_virtual_environment_container" "proxmox_lxc" {
@@ -61,6 +69,7 @@ resource "proxmox_virtual_environment_file" "container_template" {
 
 resource "proxmox_virtual_environment_download_file" "container_template" {
   count        = local.container_template_file_download
+  file_name    = local.container_template_file_download_name
   content_type = "vztmpl"
   datastore_id = "local"
   node_name    = var.node_name
